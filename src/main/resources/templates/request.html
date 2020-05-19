@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Новая заявка</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+<div class="container mt-5 mb-5">
+    <h1>Новая заявка</h1><br><br>
+    <form action="/request" method="post">
+        <input type="text" name="name" placeholder="Введите Ваше имя" class="form-control"><br>
+        <input type="text" name="surname" placeholder="Введите Вашу фамилию" class="form-control"><br>
+        <input type="text" name="middleName" placeholder="Введите Ваше отчество" class="form-control"><br>
+        <input type="text" name="email" placeholder="Введите Ваш E-mail" class="form-control"><br>
+        <input type="text" name="phoneNumber" placeholder="Введите номер телефона для связи с Вами" class="form-control"><br>
+        <textarea name="problem" placeholder="Суть проблемы" class="form-control"></textarea><br>
+        <button type="submit" class="btn btn-success">Отправить заявку</button><br><br>
+    </form>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Просмотр заявки</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+<div class="container mt-5">
+
+    <div th:each="el : ${request}" class="alert alert-info mt-2">
+        <h3>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"> </span></h3><br>
+        <p>Имя клиента: <span th:text="${el.name}"></span></p>
+        <p>Фамилия клиента: <span th:text="${el.surname}"/></span></p>
+        <p>Отчество клиента: <span th:text="${el.middleName}"/></span></p>
+        <p>Контактный e-mail: <span th:text="${el.email}"/></p>
+        <p>Контактный телефон: <span th:text="${el.phoneNumber}"/></p>
+        <p>Суть проблемы: <span th:text="${el.problem}"/></p>
+
+        <a th:href="'/request/' + ${el.id} + '/edit'" class = "btn btn-warning">Редактировать</a><br><br>
+
+    </div>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование заявки</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <h1>Редактирование заявки</h1>
+    <div th:each="el : ${request}">
+        <form method="post">
+            <input type="text" th:value="${el.name}" name="name" placeholder="Введите Ваше имя" class="form-control"><br>
+            <input type="text" th:value="${el.surname}" name="surname" placeholder="Введите Вашу фамилию" class="form-control"><br>
+            <input type="text" th:value="${el.middleName}" name="middleName" placeholder="Введите Ваше отчество" class="form-control"><br>
+            <input type="text" th:value="${el.email}" name="email" placeholder="Введите Ваш E-mail" class="form-control"><br>
+            <input type="text" th:value="${el.phoneNumber}" name="phoneNumber" placeholder="Введите номер телефона для связи с Вами" class="form-control"><br>
+            <textarea name="problem" placeholder="Суть проблемы" class="form-control" th:text="${el.problem}"/><br>
+            <button type="submit" class="btn btn-success">Обновить</button>
+        </form>
+    </div>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>
