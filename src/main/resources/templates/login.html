@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Логин</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body class="text-center">
+<form class="form-signin" th:action="@{/login}" method="post">
+    <img class="mt-5" src="http://www.digicom.spb.ru/images/logo.png" alt="" width="208" height="63">
+    <h1 class="mt-5">Вход</h1><br><br>
+    <input type="text" name="username" class="mb-4" placeholder=" Логин" required="" autofocus=""><br>
+    <input type="password" name="password" class="mb-4" placeholder=" Пароль" required=""><br>
+
+    <button class="btn btn-lg btn-primary" type="submit">Войти</button><br>
+    <p class="mt-5 mb-3 text-muted">© 2001-2020 ООО «ДИДЖИКОМ»</p>
+</form>
+
+
+</body>

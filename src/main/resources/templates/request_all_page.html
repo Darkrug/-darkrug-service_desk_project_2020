@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Просмотр заявок</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header sec:authorize="hasAuthority('CLIENT')" th:insert="blocks/header_2 :: header"></header>
+<header sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')" th:insert="blocks/header_specialist :: header"></header>
+
+<div class="container mt-5">
+
+    <h1>Список всех заявок</h1><br><br>
+
+    <div class="row">
+        <div class="col-12 col-sm-2">
+            Новая заявка:
+        </div>
+        <div class="col-12 col-sm-1">
+            <div class="alert alert-danger" role="alert">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="w-100"></div>
+
+        <div class="col-12 col-sm-2">
+            Заявка в работе:
+        </div>
+        <div class="col-12 col-sm-1">
+            <div class="alert alert-primary" role="alert">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="w-100"></div>
+
+        <div class="col-12 col-sm-2">
+            Выполненная заявка:
+        </div>
+        <div class="col-12 col-sm-1">
+            <div class="alert alert-success" role="alert">
+                &nbsp;
+            </div>
+        </div>
+
+    </div>
+    <br><br>
+
+
+    <div th:each="el : ${requests}">
+
+        <div th:switch="${el.requestStatus}">
+
+            <div th:case="${T(com.darkcircle.crmProject.enums.RequestStatus).NEW.displayValue}"
+                 class="alert alert-danger mt-2">
+                <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span></h4>
+                <a sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')" th:href="@{/specialist/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class="btn btn-link">Детальнее</a>
+                <a sec:authorize="hasAuthority('CLIENT')" th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+            </div>
+
+            <div th:case="${T(com.darkcircle.crmProject.enums.RequestStatus).IN_PROGRESS.displayValue}"
+                 class="alert alert-primary mt-2">
+                <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span></h4>
+                <a sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')" th:href="@{/specialist/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class="btn btn-link">Детальнее</a>
+                <a sec:authorize="hasAuthority('CLIENT')" th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+            </div>
+
+            <div th:case="${T(com.darkcircle.crmProject.enums.RequestStatus).DONE.displayValue}"
+                 class="alert alert-success mt-2">
+                <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span></h4>
+                <a sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')" th:href="@{/specialist/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class="btn btn-link">Детальнее</a>
+                <a sec:authorize="hasAuthority('CLIENT')" th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <div class="container">
+        <button onclick="javascript:history.back(); return false;" type="button" class="btn btn-link">Назад</button>
+        <p class="float-right">
+            <a role="button" class="btn btn-link" th:href="@{/request/all/{page_id}(page_id = ${nextPage})}">Далее</a>
+        </p>
+    </div>
+
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

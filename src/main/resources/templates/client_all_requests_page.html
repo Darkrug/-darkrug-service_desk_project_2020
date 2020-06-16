@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Просмотр заявок</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header_2 :: header"></header>
+<div class="container mt-5">
+
+    <h1>Список всех ваших заявок</h1><br><br>
+
+    <div class="row">
+        <div class="col-12 col-sm-2">
+            Новая заявка:
+        </div>
+        <div class="col-12 col-sm-1">
+            <div class="alert alert-danger" role="alert">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="w-100"></div>
+
+        <div class="col-12 col-sm-2">
+            Заявка в работе:
+        </div>
+        <div class="col-12 col-sm-1">
+            <div class="alert alert-primary" role="alert">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="w-100"></div>
+
+        <div class="col-12 col-sm-2">
+            Выполненная заявка:
+        </div>
+        <div class="col-12 col-sm-1">
+            <div class="alert alert-success" role="alert">
+                &nbsp;
+            </div>
+        </div>
+
+    </div>
+    <br><br>
+
+    <div th:each="el : ${newRequests}" class="alert alert-danger mt-2">
+        <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span>&nbsp;<span th:text="${el.company}"></span></h4>
+        <a th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+    </div>
+    <div th:each="el : ${inProgressRequests}" class="alert alert-primary mt-2">
+        <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span>&nbsp;<span th:text="${el.company}"></span></h4>
+        <a th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+    </div>
+    <div th:each="el : ${finishedRequests}" class="alert alert-success mt-2">
+        <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span>&nbsp;<span th:text="${el.company}"></span></h4>
+        <a th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+    </div>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Редактирование заявки</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header_specialist :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <div th:each="el : ${request}">
+        <h3>Редактирование заявки №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span></h3>
+        <br><br>
+        <p>Клиент: <span th:text="${el.name}"></span></p>
+        <p>Фирма: <span th:text="${el.company}"></span></p>
+        <p>Вид обслуживания: <span th:text="${el.workType}"></span></p>
+        <p>Вид работ: <span th:text="${el.workList}"></span></p>
+        <p>Дополнительная информация от клиента: <span th:text="${el.addInfo}"></span></p>
+
+        <form method="post">
+
+            <p sec:authorize="hasAuthority('SPECIALIST')">
+                Ответственный:<input type="text" name="responsible" readonly class="form-control-plaintext" th:value="${el.responsible}">
+            </p>
+
+            <br><br>
+            
+            Статус заявки:
+            <span><select name="requestStatus" class="form-control">
+            <option value="Новая">Новая</option>
+            <option value="В работе">В работе</option>
+            <option value="Заявка выполнена">Заявка выполнена</option></select></span>
+            <br>
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <p>
+                    <label for="responsible">Ответственный: </label>
+                    <select name="responsible" class="form-control" id=responsible>
+                        <div th:each="el: ${specialists}">
+                            <option th:value="${el}" th:text="${el}"></option>
+                        </div>
+                    </select>
+                </p>
+            </div>
+            <br>
+            Время выполнения:
+            <input type="text" th:value="${el.workDuration}" name="workDuration" placeholder="Введите время выполнения"
+                   class="form-control"><br><br>
+
+            <button type="submit" class="btn btn-success">Обновить</button>
+
+        </form>
+    </div>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

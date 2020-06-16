@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec = "http://www.www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Новая заявка</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header sec:authorize="hasAuthority('CLIENT')" th:insert="blocks/header_2 :: header"></header>
+<header sec:authorize="hasAuthority('SPECIALIST')" th:insert="blocks/header_specialist :: header"></header>
+<div class="container mt-5 mb-5">
+    <h1>Новая заявка</h1><br><br>
+    <form method="post">
+
+        <div sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')">
+        <p>Имя клиента: <input type="text" name="name" placeholder="Имя клиента" class="form-control"></p> <br>
+        <p>Компания: <input type="text" name="company" placeholder="Компания" class="form-control"></p> <br>
+        </div>
+
+        <p>Выберите вид обслуживания: <span><select name="workType" class="form-control">
+            <option th:each="option : ${T(com.darkcircle.crmProject.enums.WorkType).values()}"
+                    th:value="${option.displayValue}" th:text="${option.displayValue}"></option>
+        </select></span></p>
+        <br>
+
+        <p>Выберите вид работ: <span><select name="workList" class="form-control">
+             <option th:each="option : ${T(com.darkcircle.crmProject.enums.WorkList).values()}"
+                     th:value="${option.displayValue}" th:text="${option.displayValue}"></option>
+        </select></span></p>
+        <br>
+
+        <p>Введите дополнительную информацию:  <textarea name="addInfo" placeholder="Дополнительная информация" class="form-control"></textarea></p><br>
+
+        <button type="submit" class="btn btn-success">Отправить заявку</button><br><br>
+    </form>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

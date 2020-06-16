@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec = "http://www.www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Создание отчета</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header sec:authorize="hasAuthority('CLIENT')" th:insert="blocks/header_2 :: header"></header>
+<header sec:authorize="hasAuthority('SPECIALIST')" th:insert="blocks/header_specialist :: header"></header>
+<div class="container mt-5 mb-5">
+    <h1>Создание отчета</h1><br><br>
+    <form method="post">
+        <p>
+            <label for="company">Компания: </label>
+            <span><select name="company" class="form-control" id=company>
+            <div th:each="el: ${companies}">
+            <option th:value="${el}" th:text="${el}"></option>
+            </div>
+        </select></span>
+        </p>
+        <br>
+        <p>
+            <label for="date1">Дата начала отсчета: </label>
+            <input type="date" id="date1" name="date1" class="form-control"/>
+        </p><br>
+        <p>
+            <label for="date2">Дата конца отсчета: </label>
+            <input type="date" id="date2" name="date2" class="form-control"/>
+        </p><br>
+
+        <button type="submit" class="btn btn-success">Скачать отчёт</button>
+        <br><br>
+    </form>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>
