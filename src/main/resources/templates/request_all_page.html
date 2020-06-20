@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-<header sec:authorize="hasAuthority('CLIENT')" th:insert="blocks/header_2 :: header"></header>
-<header sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')" th:insert="blocks/header_specialist :: header"></header>
+<header th:insert="blocks/header :: header"></header>
 
 <div class="container mt-5">
 
@@ -57,22 +56,19 @@
             <div th:case="${T(com.darkcircle.crmProject.enums.RequestStatus).NEW.displayValue}"
                  class="alert alert-danger mt-2">
                 <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span></h4>
-                <a sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')" th:href="@{/specialist/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class="btn btn-link">Детальнее</a>
-                <a sec:authorize="hasAuthority('CLIENT')" th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+                <a th:href="@{/request/{request_id}(request_id=${el.id})}" class="btn btn-link">Детальнее</a>
             </div>
 
             <div th:case="${T(com.darkcircle.crmProject.enums.RequestStatus).IN_PROGRESS.displayValue}"
                  class="alert alert-primary mt-2">
                 <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span></h4>
-                <a sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')" th:href="@{/specialist/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class="btn btn-link">Детальнее</a>
-                <a sec:authorize="hasAuthority('CLIENT')" th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+                <a th:href="@{/request/{request_id}(request_id=${el.id})}" class="btn btn-link">Детальнее</a>
             </div>
 
             <div th:case="${T(com.darkcircle.crmProject.enums.RequestStatus).DONE.displayValue}"
                  class="alert alert-success mt-2">
                 <h4>Заявка №<span th:text="${el.id}"></span> от <span th:text="${el.requestDate}"></span></h4>
-                <a sec:authorize="hasAnyAuthority('SPECIALIST', 'ADMIN')" th:href="@{/specialist/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class="btn btn-link">Детальнее</a>
-                <a sec:authorize="hasAuthority('CLIENT')" th:href="@{/user/{id}/request/{request_id}(id=${usr.id},request_id=${el.id})}" class = "btn btn-link">Детальнее</a>
+                <a th:href="@{/request/{request_id}(request_id=${el.id})}" class="btn btn-link">Детальнее</a>
             </div>
 
         </div>

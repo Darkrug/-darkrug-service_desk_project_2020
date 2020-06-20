@@ -6,10 +6,9 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.commons.io.IOUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,22 +28,25 @@ public class CreateReport {
             PdfWriter.getInstance(document, file);
 
             //Inserting Image in PDF
-            Image image = Image.getInstance("logo.png");
+            Image image = Image.getInstance("src/main/resources/logo.png");
             image.scaleAbsolute(104f, 31f);//image width,height
             image.setAlignment(Element.ALIGN_CENTER);
 
-            // Заголовок
-
-            BaseFont baseFont = BaseFont.createFont("times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            //Шрифты
+            InputStream fontFile = new FileInputStream(new File("src/main/resources/times.ttf"));
+            byte[] bytes = IOUtils.toByteArray(fontFile);
+            BaseFont baseFont = BaseFont.createFont("times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true, bytes, null);
             Font font1 = new Font(baseFont, 18);
             Font font2 = new Font(baseFont, 12);
             Font font3 = new Font(baseFont, 10);
+
+            // Заголовок
             Paragraph title = new Paragraph("Учет выполненных работ " + company + " с " + dateFormat3.format(date1) + " по " + dateFormat3.format(date2), font1);
             title.setAlignment(Element.ALIGN_CENTER);
 
 
             //Inserting Table in PDF
-            PdfPTable table = new PdfPTable(6);
+            PdfPTable table = new PdfPTable(7);
             table.setWidthPercentage(100);
 
             table.addCell(createColumn("Дата", font2));
@@ -63,6 +65,7 @@ public class CreateReport {
                 table.addCell(new Phrase(request.getName(), font3));
                 table.addCell(new Phrase(request.getWorkList(), font3));
                 table.addCell(new Phrase(String.valueOf(request.getWorkDuration()), font3));
+                table.addCell(new Phrase(request.getAddInfo(), font3));
 
             }
             table.setSpacingBefore(30.0f);       // Space Before table starts, like margin-top in CSS

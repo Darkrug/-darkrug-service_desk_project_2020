@@ -62,13 +62,13 @@ public class MySimpleAuthenticationSuccessHandler implements AuthenticationSucce
 
     protected String determineTargetUrl(final Authentication authentication) {
 
-        String currentPrincipalName = authentication.getName();
+        /*String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUserName(currentPrincipalName).orElseThrow();
-        Long userID = user.getId();
+        Long userID = user.getId();*/
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
 
-        roleTargetUrlMap.put("CLIENT", "user/" + userID + "/request");
+        roleTargetUrlMap.put("CLIENT", "/request");
         roleTargetUrlMap.put("SPECIALIST", "/request/all/0");
         roleTargetUrlMap.put("ADMIN", "/request/all/0");
 

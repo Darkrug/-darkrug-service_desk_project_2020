@@ -7,16 +7,15 @@ import com.darkcircle.crmProject.report.CreateReport;
 import com.darkcircle.crmProject.repositories.RequestRepository;
 import com.darkcircle.crmProject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,12 +32,14 @@ public class ReportController {
     @Autowired
     private UserRepository userRepository;
 
-    String folderPath = "E:\\Java_Обучение\\crmProject\\crmProject\\download_report\\";
+    @Value("${info.path}")
+    String folderPath;
 
     @GetMapping("/report")
     public String downloadReport(Model model) {
         User user = userRepository.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow();
         model.addAttribute("usr", user);
+
         HashSet<String> companies = new HashSet<>();
         if (user.getRoles().contains(Roles.ADMIN) || user.getRoles().contains(Roles.SPECIALIST)) {
             for (User client : userRepository.findAll()) {
@@ -87,8 +88,6 @@ public class ReportController {
         return "redirect:/file/" + filename;
     }
 
-
-
     @RequestMapping("/file/{fileName}")
     @ResponseBody
     public void show(@PathVariable("fileName") String filename, HttpServletResponse response) {
@@ -113,6 +112,10 @@ public class ReportController {
             e.printStackTrace();
         }
 
+    }
+
+    private static String decode(String text) throws UnsupportedEncodingException {
+        return new String(URLDecoder.decode(text, "UTF-8").getBytes("UTF-8"), "UTF-8");
     }
 
 }

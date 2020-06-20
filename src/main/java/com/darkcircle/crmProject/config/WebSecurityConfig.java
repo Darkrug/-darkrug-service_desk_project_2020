@@ -36,8 +36,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/**").hasAuthority("CLIENT")
-                .antMatchers("/specialist/**").hasAnyAuthority("ADMIN","SPECIALIST")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -49,6 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/login")
                 .permitAll();
+
+        //.antMatchers("/user/**").hasAuthority("CLIENT")
+        //.antMatchers("/specialist/**").hasAnyAuthority("ADMIN","SPECIALIST")
     }
 
     @Bean
